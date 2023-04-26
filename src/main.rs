@@ -1,4 +1,6 @@
+mod db;
 extern crate chrono;
+use db::{load_tasks, save_tasks};
 use std::io;
 use std::fmt;
 use chrono::NaiveDate;
@@ -84,6 +86,14 @@ fn sort_tasks_by_priority(tasks: &mut Vec<Task>) {
 
 fn main() {
     println!("Welcome to the Todo List!");
+
+    let mut tasks = match load_tasks() {
+        Ok(tasks) => tasks,
+        Err(err) => {
+            eprintln!("Error loading tasks from the database: {}", err);
+            vec![]
+        }
+    };
 
     let mut tasks = vec![];
 
@@ -194,6 +204,15 @@ fn main() {
                     }
                     8 => {
                         // Quit
+                        // Save tasks to the database
+                        match save_tasks(&tasks) {
+                            Ok(_) => {
+                                println!("Tasks saved successfully");
+                            }
+                            Err(err) => {
+                                eprintln!("Error saving tasks to the database: {}", err);
+                            }
+                        }
                         break;
                     }
                     _ => {

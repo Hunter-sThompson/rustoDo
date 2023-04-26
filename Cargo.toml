@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.19"
-rusqlit = "0.26.00"
+rusqlite = "0.26.0"
