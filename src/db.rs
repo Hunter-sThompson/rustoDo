@@ -18,15 +18,19 @@ pub fn save_tasks(tasks: &[Task]) -> Result<()> {
     )?;
 
     for task in tasks {
-        let priority = task.priority as i32;
+        let priority = match task.priority {
+            Priority::Low => 0,
+            Priority::Medium => 1,
+            Priority::High => 2,
+        };
         conn.execute(
             "INSERT INTO tasks (title, description, due_date, priority, status) VALUES (?1, ?2, ?3, ?4, ?5)",
             &[
                 &task.title,
                 &task.description,
                 &task.due_date.to_rfc3339(),
-                &priority,
-                &task.status as i32,
+                &priority.to_string(),
+                &(if task.status { 1 } else { 0 }).to_string(),
             ],
         )?;
     }

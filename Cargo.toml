@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[build]
+rustflags = ["-L", "/home/linuxbrew/.linuxbrew/Cellar/sqlite/3.41.2/lib"]
 
 [dependencies]
 chrono = "0.4.19"

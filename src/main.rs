@@ -25,7 +25,7 @@ impl fmt::Display for Priority {
 }
 
 #[derive(Debug, Eq, PartialEq)]
-struct Task {
+pub struct Task {
     title: String,
     description: String,
     due_date: DateTime<Utc>,
